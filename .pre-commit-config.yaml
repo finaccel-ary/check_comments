@@ -59,6 +59,6 @@ repos:
         additional_dependencies: [black==20.8b1]
 
 -   repo: https://github.com/finaccel-ary/check_comments
-    rev: v5.4.2
+    rev: v0.0.3
     hooks:
     -   id: check-comments
