@@ -1,0 +1,6 @@
+check_comments.egg-info/*
+check_comments.egg-info/
+check_comments.egg-info
+build/*
+build/
+build
