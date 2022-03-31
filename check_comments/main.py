@@ -15,7 +15,7 @@ def main():
        
     return errors
 
-def check_comments(filename:str):
+def using_quote(filename:str):
     # count lines
     count_lines        = 0
     line_have_comments = 0
@@ -25,8 +25,7 @@ def check_comments(filename:str):
             count_lines += 1
             
             # check comments
-            if '"""' in line.decode():
-                
+            if '"""' in line.decode() or "'''" in line.decode():
                 # check if 1 line have comments
                 count_tuple = 0
                 for l in line.decode():
@@ -52,30 +51,84 @@ def check_comments(filename:str):
         'line_have_comments': line_have_comments
     }
 
+def using_hashtag(filename:str):
+    # count lines
+    count_lines        = 0
+    line_have_comments = 0
+    with open(filename, 'rb') as fb:    
+        for line in fb:
+            count_lines += 1
+            
+            # check comments
+            if "#" in line.decode():
+                line_have_comments +=1
+    
+    return {
+        'count_lines'       : count_lines,
+        'line_have_comments': line_have_comments
+    }
+
+def using_dash(filename:str):
+    # count lines
+    count_lines        = 0
+    line_have_comments = 0
+    with open(filename, 'rb') as fb:    
+        for line in fb:
+            count_lines += 1
+            
+            # check comments
+            if "--" in line.decode():
+                line_have_comments +=1
+    
+    return {
+        'count_lines'       : count_lines,
+        'line_have_comments': line_have_comments
+    }
+    
+def check_comments_python(filename:str):
+    # using_quote = using_quote(filename)
+    using_hashtag = using_hashtag(filename)
+    
+    return using_hashtag
+
+def check_comments_sql(filename:str):
+    using_dash = using_dash(filename)
+    
+    return using_dash
+
 def check_file(filename:str, args) -> float:
-    print(filename)
+    percentage         = 0
+    count_lines        = 0
+    line_have_comments = 0
+    
     if filename == '-':
         contents_bytes = sys.stdin.buffer.read()
     else:
         # open file
         with open(filename, 'rb') as fb:
             contents_bytes = fb.read()
-        
-    counting           = check_comments(filename)
-    count_lines        = counting['count_lines']
-    line_have_comments = counting['line_have_comments']
+    
+    if filename.endswith('.py'):
+        counting           = check_comments_python(filename)
+        count_lines        = counting['count_lines']
+        line_have_comments = counting['line_have_comments']
+    elif filename.endswith('.sql'):
+        counting           = check_comments_sql(filename)
+        count_lines        = counting['count_lines']
+        line_have_comments = counting['line_have_comments']
     
     # get contexts files
     try:
         contents_text = contents_bytes.decode()
     except UnicodeDecodeError:
         print(f'{filename} is non-utf-8 (not supported)')
-        return 0
+        return percentage
     
-    if line_have_comments == 0:
-        return 0
+    if line_have_comments == percentage:
+        return percentage
     
-    return round(100 * (float(line_have_comments) / float(count_lines)), 2)
+    percentage = round(100 * (float(line_have_comments) / float(count_lines)), 2)
+    return percentage
 
 if __name__ == "__main__":
     main()
