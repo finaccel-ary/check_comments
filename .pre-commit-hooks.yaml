@@ -1,4 +1,4 @@
-- id: hook-check-comments
+- id: check-comments
   name: Check Comments
   description: This repo for check percentage comments
   entry: check-comments

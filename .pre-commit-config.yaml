@@ -1,0 +1,64 @@
+repos:
+-   repo: https://github.com/psf/black # Python code formatter
+    rev: 22.1.0
+    hooks:
+    -   id: black
+
+-   repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.1.0
+    hooks:
+        # Identify invalid files
+        - id: check-ast # Simply check whether files parse as valid python.
+        - id: check-yaml
+        - id: check-json
+        - id: check-toml
+
+        # git checks
+        - id: check-merge-conflict # Check for files that contain merge conflict strings.
+        - id: check-added-large-files
+        - id: detect-private-key
+        - id: check-case-conflict # Check for files with names that would conflict on a case-insensitive filesystem like MacOS HFS+ or Windows FAT
+
+        # Python checks
+        - id: check-docstring-first # Checks for a common error of placing code before the docstring.
+        - id: debug-statements
+        - id: requirements-txt-fixer
+        - id: fix-encoding-pragma
+        - id: fix-byte-order-marker
+
+        # General quality checks
+        - id: mixed-line-ending
+        - id: trailing-whitespace
+          args: [--markdown-linebreak-ext=md]
+        - id: check-executables-have-shebangs # Checks that non-binary executables have a proper shebang.
+        - id: end-of-file-fixer
+
+-   repo: https://github.com/PyCQA/flake8 # python code style
+    rev: 4.0.1
+    hooks:
+    -   id: flake8
+        language_version: python3
+
+-   repo: https://github.com/asottile/reorder_python_imports # Tool for automatically reordering python imports.
+    rev: v3.0.1
+    hooks:
+    -   id: reorder-python-imports
+        # args: [--application-directories=.:src, --py36-plus]
+        args: [--py36-plus]
+
+-   repo: https://github.com/asottile/pyupgrade # automatically upgrade syntax for newer versions of the language.
+    rev: v2.31.1
+    hooks:
+    -   id: pyupgrade
+        args: [--py36-plus]
+
+-   repo: https://github.com/asottile/blacken-docs #  python code blocks in documentation files.
+    rev: v1.12.1
+    hooks:
+    -   id: blacken-docs
+        additional_dependencies: [black==20.8b1]
+
+-   repo: https://github.com/finaccel-ary/check_comments
+    rev: v5.4.2
+    hooks:
+    -   id: check-comments
