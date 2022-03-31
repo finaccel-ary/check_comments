@@ -12,8 +12,11 @@ def main():
        percentage = check_file(filename, args)
        if (percentage<20):
            errors.append(TypeError(f"{filename} ({percentage}%) comments less than 20%"))
-       
-    return errors
+    
+    if len(errors) > 0:
+        return errors
+    
+    return 0
 
 def using_quote(filename:str):
     # count lines
