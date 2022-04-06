@@ -107,6 +107,13 @@ def check_file(filename:str, args) -> float:
         with open(filename, 'rb') as fb:
             contents_bytes = fb.read()
     
+    # get contexts files
+    try:
+        contents_text = contents_bytes.decode()
+    except UnicodeDecodeError:
+        print(f'{filename} is non-utf-8 (not supported)')
+        return percentage
+    
     if filename.endswith('.py'):
         counting           = check_comments_python(filename)
         count_lines        = counting['count_lines']
@@ -115,13 +122,9 @@ def check_file(filename:str, args) -> float:
         counting           = check_comments_sql(filename)
         count_lines        = counting['count_lines']
         line_have_comments = counting['line_have_comments']
-    
-    # get contexts files
-    try:
-        contents_text = contents_bytes.decode()
-    except UnicodeDecodeError:
-        print(f'{filename} is non-utf-8 (not supported)')
-        return percentage
+    else:
+        count_lines        = 100
+        line_have_comments = 100
     
     if line_have_comments == percentage:
         return percentage
