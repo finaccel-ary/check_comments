@@ -4,3 +4,4 @@ check_comments.egg-info
 build/*
 build/
 build
+.DS_Store

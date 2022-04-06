@@ -90,14 +90,10 @@ def using_dash(filename:str):
     
 def check_comments_python(filename:str):
     # using_quote = using_quote(filename)
-    using_hashtag = using_hashtag(filename)
-    
-    return using_hashtag
+    return using_hashtag(filename)
 
 def check_comments_sql(filename:str):
-    using_dash = using_dash(filename)
-    
-    return using_dash
+    return using_dash(filename)
 
 def check_file(filename:str, args) -> float:
     percentage         = 0
