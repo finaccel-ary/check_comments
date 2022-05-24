@@ -7,11 +7,12 @@ def main():
     parser.add_argument("filenames", nargs="*")
     args = parser.parse_args()
 
-    errors = []
+    min_percentage = 10
+    errors         = []
     for filename in args.filenames:
        percentage = check_file(filename, args)
-       if (percentage<20):
-           errors.append(TypeError(f"{filename} ({percentage}%) comments less than 20%"))
+       if (percentage<min_percentage):
+           errors.append(TypeError(f"{filename} ({percentage}%) comments less than {min_percentage}%"))
     
     if len(errors) > 0:
         return errors
